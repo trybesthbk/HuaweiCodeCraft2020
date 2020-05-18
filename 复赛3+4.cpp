@@ -13,8 +13,8 @@ using namespace std;
 
 #define MAXROW 2000100
 #define MAXROW3 6000100
-#define MAXOUTSIZE 2000000
-#define HALFOUTSIZE 1000000
+#define MAXOUTSIZE 20000000
+#define HALFOUTSIZE 10000000
 #define PATHSIZE 128
 
 struct Path
@@ -54,8 +54,8 @@ int pathnum3[MAXROW] = { 0 };
 int pathsgn4[MAXROW];
 int pathnum4[MAXROW] = { 0 };
 
-int total[MAXROW3];   //¶ÁÈ¡µÄËùÓĞÊı¾İ£¬²»°üº¬µÚÈıÁĞ  /600W
-int totallen;   //¾İ×Ü³¤
+int total[MAXROW3];   //è¯»å–çš„æ‰€æœ‰æ•°æ®ï¼Œä¸åŒ…å«ç¬¬ä¸‰åˆ—  /600W
+int totallen;   //æ®æ€»é•¿
 int newsetnum[MAXROW];
 int newsetlen;
 int stack[MAXROW];
@@ -428,7 +428,7 @@ void checkcircle1()
 	int64_t m1, m2, m3, m4, m5, m6, m7, pm1, pm3;
 	int length1, length2, length3, length4, length5, length6;
 	int i0 = 1;
-	for (; i0 < newsetlen; i0 += 4)                //newpicdexnumÎª¼ôÖ¦ºóµÄµÚÒ»Î»²»ÖØ¸´½Úµã¸öÊı
+	for (; i0 < newsetlen; i0 += 4)                //newpicdexnumä¸ºå‰ªæåçš„ç¬¬ä¸€ä½ä¸é‡å¤èŠ‚ç‚¹ä¸ªæ•°
 	{
 		k0 = newsetnum[i0];
 		res3p[i0] = res31 + res31len * 3;
@@ -437,25 +437,25 @@ void checkcircle1()
 		res6p[i0] = res61 + res61len * 6;
 		res7p[i0] = res71 + res71len * 7;
 		length1 = newNpicnum[k0];
-		for (int i1 = 0; i1 < length1; i1++)   //newNpicnum[picdex[i0]]Îªi0½ÚµãµÄÈë¶È
+		for (int i1 = 0; i1 < length1; i1++)   //newNpicnum[picdex[i0]]ä¸ºi0èŠ‚ç‚¹çš„å…¥åº¦
 		{
-			k1 = Npic[k0][i1].to;                           //k1Îªi1¶ÔÓ¦i0µÄ³ö½ÚµãÊµÖµ
+			k1 = Npic[k0][i1].to;                           //k1ä¸ºi1å¯¹åº”i0çš„å‡ºèŠ‚ç‚¹å®å€¼
 			if (k1 <= k0)continue;
 			m1 = Npic[k0][i1].money;
 			length2 = newNpicnum[k1];
 			for (int i2 = 0; i2 < length2; i2++)
 			{
-				k2 = Npic[k1][i2].to;                           //k2Îªi2¶ÔÓ¦i1µÄ³ö½ÚµãÊµÖµ
+				k2 = Npic[k1][i2].to;                           //k2ä¸ºi2å¯¹åº”i1çš„å‡ºèŠ‚ç‚¹å®å€¼
 				if (k2 <= k0)continue;
 				m2 = Npic[k1][i2].money;
 				if (m1 > 3 * m2 || m2 > 5 * m1)continue;
 				length3 = newNpicnum[k2];
 				for (int i3 = 0; i3 < length3; i3++)
 				{
-					k3 = Npic[k2][i3].to;                           //k2Îªi2¶ÔÓ¦i1µÄ³ö½ÚµãÊµÖµ
+					k3 = Npic[k2][i3].to;                           //k2ä¸ºi2å¯¹åº”i1çš„å‡ºèŠ‚ç‚¹å®å€¼
 					if (k3 < k0 || k3 == k1)continue;
 					m3 = Npic[k2][i3].money;
-					if (m2 > 3 * m3 || m3 > 5 * m2)continue;                       //k2Îªi2¶ÔÓ¦i1µÄ³ö½ÚµãÊµÖµ
+					if (m2 > 3 * m3 || m3 > 5 * m2)continue;                       //k2ä¸ºi2å¯¹åº”i1çš„å‡ºèŠ‚ç‚¹å®å€¼
 					ps = pathnum1[k3];
 					if (!ps)pathsgn1[pathsgnnum1++] = k3;
 					path1[k3*PATHSIZE + ps].point1 = k1;
@@ -484,7 +484,7 @@ void checkcircle1()
 		}
 
 		length3 = newpicnum[k0];
-		for (int i4 = 0; i4 < length3; i4++)      //newpicnumÎªi0¶ÔÓ¦½ÚµãµÄ³ö¶È
+		for (int i4 = 0; i4 < length3; i4++)      //newpicnumä¸ºi0å¯¹åº”èŠ‚ç‚¹çš„å‡ºåº¦
 		{
 			k4 = pic[k0][i4].to;
 			if (k4 <= k0)continue;
@@ -611,7 +611,7 @@ void checkcircle2()
 	int64_t m1, m2, m3, m4, m5, m6, m7, pm1, pm3;
 	int length1, length2, length3, length4, length5, length6;
 	int i0 = 2;
-	for (; i0 < newsetlen; i0 += 4)                //newpicdexnumÎª¼ôÖ¦ºóµÄµÚÒ»Î»²»ÖØ¸´½Úµã¸öÊı
+	for (; i0 < newsetlen; i0 += 4)                //newpicdexnumä¸ºå‰ªæåçš„ç¬¬ä¸€ä½ä¸é‡å¤èŠ‚ç‚¹ä¸ªæ•°
 	{
 		k0 = newsetnum[i0];
 		res3p[i0] = res32 + res32len * 3;
@@ -620,25 +620,25 @@ void checkcircle2()
 		res6p[i0] = res62 + res62len * 6;
 		res7p[i0] = res72 + res72len * 7;
 		length1 = newNpicnum[k0];
-		for (int i1 = 0; i1 < length1; i1++)   //newNpicnum[picdex[k0]]Îªk0½ÚµãµÄÈë¶È
+		for (int i1 = 0; i1 < length1; i1++)   //newNpicnum[picdex[k0]]ä¸ºk0èŠ‚ç‚¹çš„å…¥åº¦
 		{
-			k1 = Npic[k0][i1].to;                           //k1Îªi1¶ÔÓ¦k0µÄ³ö½ÚµãÊµÖµ
+			k1 = Npic[k0][i1].to;                           //k1ä¸ºi1å¯¹åº”k0çš„å‡ºèŠ‚ç‚¹å®å€¼
 			if (k1 <= k0)continue;
 			m1 = Npic[k0][i1].money;
 			length2 = newNpicnum[k1];
 			for (int i2 = 0; i2 < length2; i2++)
 			{
-				k2 = Npic[k1][i2].to;                           //k2Îªi2¶ÔÓ¦i1µÄ³ö½ÚµãÊµÖµ
+				k2 = Npic[k1][i2].to;                           //k2ä¸ºi2å¯¹åº”i1çš„å‡ºèŠ‚ç‚¹å®å€¼
 				if (k2 <= k0)continue;
 				m2 = Npic[k1][i2].money;
 				if (m1 > 3 * m2 || m2 > 5 * m1)continue;
 				length3 = newNpicnum[k2];
 				for (int i3 = 0; i3 < length3; i3++)
 				{
-					k3 = Npic[k2][i3].to;                           //k2Îªi2¶ÔÓ¦i1µÄ³ö½ÚµãÊµÖµ
+					k3 = Npic[k2][i3].to;                           //k2ä¸ºi2å¯¹åº”i1çš„å‡ºèŠ‚ç‚¹å®å€¼
 					if (k3 < k0 || k3 == k1)continue;
 					m3 = Npic[k2][i3].money;
-					if (m2 > 3 * m3 || m3 > 5 * m2)continue;                       //k2Îªi2¶ÔÓ¦i1µÄ³ö½ÚµãÊµÖµ
+					if (m2 > 3 * m3 || m3 > 5 * m2)continue;                       //k2ä¸ºi2å¯¹åº”i1çš„å‡ºèŠ‚ç‚¹å®å€¼
 					ps = pathnum2[k3];
 					if (!ps)pathsgn2[pathsgnnum2++] = k3;
 					path2[k3*PATHSIZE + ps].point1 = k1;
@@ -666,7 +666,7 @@ void checkcircle2()
 			res32len++;
 		}
 		length3 = newpicnum[k0];
-		for (int i4 = 0; i4 < length3; i4++)      //newpicnumÎªk0¶ÔÓ¦½ÚµãµÄ³ö¶È
+		for (int i4 = 0; i4 < length3; i4++)      //newpicnumä¸ºk0å¯¹åº”èŠ‚ç‚¹çš„å‡ºåº¦
 		{
 			k4 = pic[k0][i4].to;
 			if (k4 <= k0)continue;
@@ -793,7 +793,7 @@ void checkcircle3()
 	int64_t m1, m2, m3, m4, m5, m6, m7, pm1, pm3;
 	int length1, length2, length3, length4, length5, length6;
 	int i0 = 3;
-	for (; i0 < newsetlen; i0 += 4)                //newpicdexnumÎª¼ôÖ¦ºóµÄµÚÒ»Î»²»ÖØ¸´½Úµã¸öÊı
+	for (; i0 < newsetlen; i0 += 4)                //newpicdexnumä¸ºå‰ªæåçš„ç¬¬ä¸€ä½ä¸é‡å¤èŠ‚ç‚¹ä¸ªæ•°
 	{
 		k0 = newsetnum[i0];
 		res3p[i0] = res33 + res33len * 3;
@@ -802,25 +802,25 @@ void checkcircle3()
 		res6p[i0] = res63 + res63len * 6;
 		res7p[i0] = res73 + res73len * 7;
 		length1 = newNpicnum[k0];
-		for (int i1 = 0; i1 < length1; i1++)   //newNpicnum[picdex[k0]]Îªi0½ÚµãµÄÈë¶È
+		for (int i1 = 0; i1 < length1; i1++)   //newNpicnum[picdex[k0]]ä¸ºi0èŠ‚ç‚¹çš„å…¥åº¦
 		{
-			k1 = Npic[k0][i1].to;                           //k1Îªi1¶ÔÓ¦i0µÄ³ö½ÚµãÊµÖµ
+			k1 = Npic[k0][i1].to;                           //k1ä¸ºi1å¯¹åº”i0çš„å‡ºèŠ‚ç‚¹å®å€¼
 			if (k1 <= k0)continue;
 			m1 = Npic[k0][i1].money;
 			length2 = newNpicnum[k1];
 			for (int i2 = 0; i2 < length2; i2++)
 			{
-				k2 = Npic[k1][i2].to;                           //k2Îªi2¶ÔÓ¦i1µÄ³ö½ÚµãÊµÖµ
+				k2 = Npic[k1][i2].to;                           //k2ä¸ºi2å¯¹åº”i1çš„å‡ºèŠ‚ç‚¹å®å€¼
 				if (k2 <= k0)continue;
 				m2 = Npic[k1][i2].money;
 				if (m1 > 3 * m2 || m2 > 5 * m1)continue;
 				length3 = newNpicnum[k2];
 				for (int i3 = 0; i3 < length3; i3++)
 				{
-					k3 = Npic[k2][i3].to;                           //k2Îªi2¶ÔÓ¦i1µÄ³ö½ÚµãÊµÖµ
+					k3 = Npic[k2][i3].to;                           //k2ä¸ºi2å¯¹åº”i1çš„å‡ºèŠ‚ç‚¹å®å€¼
 					if (k3 < k0 || k3 == k1)continue;
 					m3 = Npic[k2][i3].money;
-					if (m2 > 3 * m3 || m3 > 5 * m2)continue;                       //k2Îªi2¶ÔÓ¦i1µÄ³ö½ÚµãÊµÖµ
+					if (m2 > 3 * m3 || m3 > 5 * m2)continue;                       //k2ä¸ºi2å¯¹åº”i1çš„å‡ºèŠ‚ç‚¹å®å€¼
 					ps = pathnum3[k3];
 					if (!ps)pathsgn3[pathsgnnum3++] = k3;
 					path3[k3*PATHSIZE + ps].point1 = k1;
@@ -848,7 +848,7 @@ void checkcircle3()
 			res33len++;
 		}
 		length3 = newpicnum[k0];
-		for (int i4 = 0; i4 < length3; i4++)      //newpicnumÎªk0¶ÔÓ¦½ÚµãµÄ³ö¶È
+		for (int i4 = 0; i4 < length3; i4++)      //newpicnumä¸ºk0å¯¹åº”èŠ‚ç‚¹çš„å‡ºåº¦
 		{
 			k4 = pic[k0][i4].to;
 			if (k4 <= k0)continue;
@@ -976,7 +976,7 @@ void checkcircle4()
 	int64_t m1, m2, m3, m4, m5, m6, m7, pm1, pm3;
 	int length1, length2, length3, length4, length5, length6;
 	int i0 = 4;
-	for (; i0 < newsetlen; i0 += 4)                //newpicdexnumÎª¼ôÖ¦ºóµÄµÚÒ»Î»²»ÖØ¸´½Úµã¸öÊı
+	for (; i0 < newsetlen; i0 += 4)                //newpicdexnumä¸ºå‰ªæåçš„ç¬¬ä¸€ä½ä¸é‡å¤èŠ‚ç‚¹ä¸ªæ•°
 	{
 		k0 = newsetnum[i0];
 		res3p[i0] = res34 + res34len * 3;
@@ -985,25 +985,25 @@ void checkcircle4()
 		res6p[i0] = res64 + res64len * 6;
 		res7p[i0] = res74 + res74len * 7;
 		length1 = newNpicnum[k0];
-		for (int i1 = 0; i1 < length1; i1++)   //newNpicnum[picdex[i0]]Îªi0½ÚµãµÄÈë¶È
+		for (int i1 = 0; i1 < length1; i1++)   //newNpicnum[picdex[i0]]ä¸ºi0èŠ‚ç‚¹çš„å…¥åº¦
 		{
-			k1 = Npic[k0][i1].to;                           //k1Îªi1¶ÔÓ¦i0µÄ³ö½ÚµãÊµÖµ
+			k1 = Npic[k0][i1].to;                           //k1ä¸ºi1å¯¹åº”i0çš„å‡ºèŠ‚ç‚¹å®å€¼
 			if (k1 <= k0)continue;
 			m1 = Npic[k0][i1].money;
 			length2 = newNpicnum[k1];
 			for (int i2 = 0; i2 < length2; i2++)
 			{
-				k2 = Npic[k1][i2].to;                           //k2Îªi2¶ÔÓ¦i1µÄ³ö½ÚµãÊµÖµ
+				k2 = Npic[k1][i2].to;                           //k2ä¸ºi2å¯¹åº”i1çš„å‡ºèŠ‚ç‚¹å®å€¼
 				if (k2 <= k0)continue;
 				m2 = Npic[k1][i2].money;
 				if (m1 > 3 * m2 || m2 > 5 * m1)continue;
 				length3 = newNpicnum[k2];
 				for (int i3 = 0; i3 < length3; i3++)
 				{
-					k3 = Npic[k2][i3].to;                           //k2Îªi2¶ÔÓ¦i1µÄ³ö½ÚµãÊµÖµ
+					k3 = Npic[k2][i3].to;                           //k2ä¸ºi2å¯¹åº”i1çš„å‡ºèŠ‚ç‚¹å®å€¼
 					if (k3 < k0 || k3 == k1)continue;
 					m3 = Npic[k2][i3].money;
-					if (m2 > 3 * m3 || m3 > 5 * m2)continue;                       //k2Îªi2¶ÔÓ¦i1µÄ³ö½ÚµãÊµÖµ
+					if (m2 > 3 * m3 || m3 > 5 * m2)continue;                       //k2ä¸ºi2å¯¹åº”i1çš„å‡ºèŠ‚ç‚¹å®å€¼
 					ps = pathnum4[k3];
 					if (!ps)pathsgn4[pathsgnnum4++] = k3;
 					path4[k3*PATHSIZE + ps].point1 = k1;
@@ -1031,7 +1031,7 @@ void checkcircle4()
 			res34len++;
 		}
 		length3 = newpicnum[k0];
-		for (int i4 = 0; i4 < length3; i4++)      //newpicnumÎªk0¶ÔÓ¦½ÚµãµÄ³ö¶È
+		for (int i4 = 0; i4 < length3; i4++)      //newpicnumä¸ºk0å¯¹åº”èŠ‚ç‚¹çš„å‡ºåº¦
 		{
 			k4 = pic[k0][i4].to;
 			if (k4 <= k0)continue;
