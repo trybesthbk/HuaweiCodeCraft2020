@@ -1554,7 +1554,7 @@ void savetostr()
 
 int main()
 {
-	char loadpath[30] = "/data/1004812/test_data.txt";
+	char loadpath[30] = "/data/test_data.txt";
 
 	loaddata(loadpath);
 	measure([]() {
